@@ -73,3 +73,23 @@ values are:
 24 ...                               1.0   -9.0       1 ...    True    -9.0
 25 ...                               1.0   -9.0       1 ...    True    -9.0
 ['INTEGER', 26 rows, 26 samples, 5 variables]
+
+
+#what I got for the minimum using aggregate
+#data = np.array([9, -1, -2, 0, -2])
+#print the objective funtion
+BinaryQuadraticModel({'x_0': 9.0, 'x_1': -1.0, 'x_2': -2.0, 'x_3': 0.0, 'x_4': -2.0}, {}, 0.0, 'BINARY')
+#print the number of variables in cqm
+number of variables for this problem 5
+#print all samplest aggregated
+all samplest aggregated
+  x_0 x_1 x_2 x_3 x_4 energy num_oc. is_sat. is_fea. object.
+0 0.0 0.0 0.0 0.0 1.0   -2.0      29 arra...    True    -2.0
+1 0.0 0.0 1.0 0.0 0.0   -2.0      24 arra...    True    -2.0
+['INTEGER', 2 rows, 53 samples, 5 variables]
+#print all feasible samplest aggregated
+feasible solutions aggregated
+  x_0 x_1 x_2 x_3 x_4 energy num_oc. is_sat. is_fea. object.
+0 0.0 0.0 0.0 0.0 1.0   -2.0      29 arra...    True    -2.0
+1 0.0 0.0 1.0 0.0 0.0   -2.0      24 arra...    True    -2.0
+['INTEGER', 2 rows, 53 samples, 5 variables]
