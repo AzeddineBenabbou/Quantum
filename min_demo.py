@@ -13,13 +13,13 @@ w=np.array([9, -1, -2, 0, -2])
 #define binary variables
 bin_variables = [Binary(f'x_{i}') for i in range(num_i)]
 
-#print what kinf of variables we are using
+#print what kind of variables we are using
 print(bin_variables[0])
 
 #instantiate a cqm
 cqm=ConstrainedQuadraticModel()
 
-#define the objective
+#define the objective function
 objective=quicksum(w[i]*bin_variables[i] for i in range(num_i))
 
 print(objective)
