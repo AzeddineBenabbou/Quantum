@@ -120,4 +120,24 @@ feasible solutions aggregated
   e_0 e_1 e_2 e_3 e_4 e_5 e_6 e_7 e_8 e_9 energy num_oc. is_sat. is_fea.
 0 0.0 0.0 1.0 0.0 0.0 1.0 1.0 0.0 0.0 1.0   -4.0      18 arra...    True
 
+# results for Delaunay 2d, with 4 points 
+# objective function = min(sum(vol))
+# subject to: 
+     sum(triangles_of_internal_edges_areas)=total_area
+     sum(border edges)=4
+
+all samplest aggregated
+  e_0 e_1 e_2 e_3 e_4 e_5 energy num_oc. is_sat. is_fea.
+1 1.0 0.0 1.0 0.0 0.0 1.0  4.529       1 arra...   False
+0 1.0 1.0 1.0 0.0 0.0 1.0 10.768       5 arra...   False
+3 1.0 0.0 1.0 0.0 1.0 1.0 11.958       6 arra...   False
+2 1.0 1.0 0.0 0.0 1.0 1.0 12.239       1 arra...   False
+4 1.0 0.0 1.0 1.0 0.0 1.0 12.397       3 arra...   False
+5 1.0 1.0 1.0 1.0 0.0 1.0 21.446      36 arra...    True
+6 1.0 1.0 1.0 0.0 1.0 1.0 21.626       1 arra...    True
+['INTEGER', 7 rows, 53 samples, 6 variables]
+feasible solutions aggregated
+  e_0 e_1 e_2 e_3 e_4 e_5 energy num_oc. is_sat. is_fea.
+0 1.0 1.0 1.0 1.0 0.0 1.0 21.446      36 arra...    True
+1 1.0 1.0 1.0 0.0 1.0 1.0 21.626       1 arra...    True
 
