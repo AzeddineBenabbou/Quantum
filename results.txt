@@ -93,3 +93,31 @@ feasible solutions aggregated
 0 0.0 0.0 0.0 0.0 1.0   -2.0      29 arra...    True    -2.0
 1 0.0 0.0 1.0 0.0 0.0   -2.0      24 arra...    True    -2.0
 ['INTEGER', 2 rows, 53 samples, 5 variables]
+
+
+# results for Delaunay 1d, with:
+# objective function = max number of edges 
+# subject to: sum(length_i)=10
+   e_0 e_1 e_2 e_3 e_4 e_5 e_6 e_7 e_8 e_9 energy num_oc. is_sat. is_fea.
+4  0.0 0.0 1.0 0.0 1.0 1.0 1.0 0.0 0.0 0.0   -4.0       3 arra...   False
+7  0.0 1.0 0.0 0.0 0.0 1.0 1.0 0.0 0.0 1.0   -4.0       1 arra...   False
+8  0.0 1.0 1.0 0.0 0.0 0.0 1.0 0.0 0.0 1.0   -4.0       1 arra...   False
+11 0.0 0.0 1.0 0.0 0.0 1.0 1.0 0.0 0.0 1.0   -4.0      18 arra...    True
+12 0.0 0.0 0.0 1.0 0.0 1.0 1.0 0.0 0.0 1.0   -4.0       1 arra...   False
+13 0.0 0.0 1.0 1.0 0.0 1.0 0.0 0.0 0.0 1.0   -4.0       1 arra...   False
+14 0.0 0.0 1.0 1.0 0.0 0.0 1.0 0.0 0.0 1.0   -4.0       2 arra...   False
+15 1.0 0.0 1.0 1.0 0.0 0.0 0.0 0.0 0.0 1.0   -4.0       1 arra...   False
+1  0.0 0.0 0.0 1.0 0.0 0.0 1.0 0.0 0.0 1.0   -3.0       1 arra...   False
+2  0.0 0.0 1.0 1.0 0.0 0.0 0.0 0.0 0.0 1.0   -3.0       1 arra...   False
+3  0.0 0.0 0.0 0.0 1.0 1.0 1.0 0.0 0.0 0.0   -3.0       3 arra...   False
+5  0.0 0.0 1.0 0.0 0.0 0.0 1.0 1.0 0.0 0.0   -3.0       1 arra...   False
+9  0.0 0.0 0.0 0.0 0.0 1.0 1.0 1.0 0.0 0.0   -3.0       1 arra...   False
+10 1.0 0.0 1.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0   -3.0       2 arra...   False
+0  1.0 0.0 1.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0   -2.0       3 arra...   False
+6  1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0   -2.0       1 arra...   False
+['INTEGER', 16 rows, 41 samples, 10 variables]
+feasible solutions aggregated
+  e_0 e_1 e_2 e_3 e_4 e_5 e_6 e_7 e_8 e_9 energy num_oc. is_sat. is_fea.
+0 0.0 0.0 1.0 0.0 0.0 1.0 1.0 0.0 0.0 1.0   -4.0      18 arra...    True
+
+
