@@ -90,42 +90,34 @@ bin_variables = [Binary(f'e_{i}') for i in range(nb_var)]
 cqm=ConstrainedQuadraticModel()
 
 # define the objective function
-objective1=quicksum(m[i][j]*vol[i][j]*bin_variables[i]*bin_variables[j] for i in range(nb_var) for j in range(i+1, nb_var))
-
-print(objective1)
-
-#objective2=quicksum(-1*bin_variables[i] for i in range(nb_var))
-
+objective1=quicksum(m[i][j]*vol[i][j]*bin_variables[i]*bin_variables[j] 
+for i in range(nb_var) for j in range(i+1, nb_var))
 
 # set objectives
 cqm.set_objective(objective1)
-
-
 # add constraints
 #constraint 1= existing edges
-cqm.add_constraint(bin_variables[0]+bin_variables[1]+bin_variables[2]+bin_variables[5]==4, 'existing edge constraint')
-#constraint2 = sum of incident areas of incident triangles to internal edges = total area (for all edges in the solution)
-cqm.add_constraint(bin_variables[3]*quicksum(a[3][i] for i in range(nb_var))+ bin_variables[4]*quicksum(a[4][i] for i in range(nb_var))==2.*total_area, 'total area')
+cqm.add_constraint(bin_variables[0]+bin_variables[1]+
+bin_variables[2]+bin_variables[5]==4,
+ 'existing edge constraint')
+#constraint2 = sum of incident areas of incident triangles to internal 
+# edges = total area (for all edges in the solution)
+cqm.add_constraint(bin_variables[3]*quicksum(a[3][i] 
+for i in range(nb_var))+ bin_variables[4]*quicksum(a[4][i] 
+for i in range(nb_var))==2.*total_area, 'total area')
 
-#constraints on border edges
-# cqm.add_constraint(quicksum(m[0][j]*bin_variables[0]*bin_variables[j] for j in range(nb_var))==2, 'border edge0 one triangle')
-# cqm.add_constraint(quicksum(m[1][j]*bin_variables[1]*bin_variables[j] for j in range(nb_var))==2, 'border edge1 one triangle')
-# cqm.add_constraint(quicksum(m[2][j]*bin_variables[2]*bin_variables[j] for j in range(nb_var))==2, 'border edge2 one triangle')
-# cqm.add_constraint(quicksum(m[5][j]*bin_variables[5]*bin_variables[j] for j in range(nb_var))==2, 'border edge5 one triangle')
-#constraints on internal edges
-#cqm.add_constraint(quicksum(m[3][j]*bin_variables[3]*bin_variables[j] for j in range(nb_var))%4==0, 'border edge3 two triangles')
-#cqm.add_constraint(quicksum(m[4][j]*bin_variables[4]*bin_variables[j] for j in range(nb_var))%4==0, 'border edge4 two triangles')
-
-# print the number of variables 
-# print("number of variables for this problem {}".format(len(cqm.variables)))
-
-# submit to a solver
-# CQM sampler
+# submit to a solver, CQM sampler
 # instantiate a cqm solver (sampler)
 cqm_sampler = LeapHybridCQMSampler()
 
 # # #solve with the instance of the cqm solver
-sampleset = cqm_sampler.sample_cqm(cqm, time_limit=5, label ='Delaunay 2d with objective and constraints')
+sampleset = cqm_sampler.sample_cqm(cqm, time_limit=5, 
+label ='Delaunay 2d with objective and constraints')
+
+
+
+
+
 print("all samplest aggregated")
 print(sampleset.aggregate())
 
