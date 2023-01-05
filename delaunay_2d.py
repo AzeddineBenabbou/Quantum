@@ -10,7 +10,7 @@ n=xy.size/2
 
 #define the edges (variables of current problem)
 # edges ={{0, 1}, {1, 2}, {2, 3} ...{n-2, n-1} {0, 2}, {1, 3} ... {n-3, n-1} .....{0, n-2}, {1, n-1}, {0, n-1}}
-# e1=[1 2]
+
 nb_var=int((n*n-n)/2)
 #define edges for the current problem
 edges=np.array([0, 1, 1, 2, 2, 3, 0, 2, 1, 3, 0, 3])
@@ -77,9 +77,6 @@ print(vol)
 
 #total area for this example
 total_area=1.9
-
-
-
 
 
 
