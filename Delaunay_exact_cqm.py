@@ -12,7 +12,8 @@ import numpy as np
 # print(sampleset)
 
 # define geometry of points
-xy = np.array([0., 0., 1., 0., 0.9, 1., 0., 1., 0.6, 0.7, 0.25, 0.25, 0.5, 0.5, 0.25, 0.75])
+#xy = np.array([0., 0., 1., 0., 0.9, 1., 0., 1., 0.6, 0.7, 0.25, 0.25, 0.5, 0.5, 0.25, 0.75])
+xy = np.array([0., 0., 1., 0., 0.9, 1., 0., 1., 0.6, 0.7])
 border_edges = [0, 1, 1, 2, 2, 3, 3, 0]
 # n is number of points
 n = int(xy.size/2)
@@ -339,9 +340,10 @@ cqm.set_objective(objective1)
 
 # # solve
 
-#sampleset = ExactCQMSolver().sample_cqm(cqm)
-cqm_sampler = LeapHybridCQMSampler()
-sampleset=cqm_sampler.sample_cqm(cqm, label ='Delaunay_general_case')
+sampleset = ExactCQMSolver().sample_cqm(cqm)
+# cqm_sampler = LeapHybridCQMSampler()
+# sampleset=cqm_sampler.sample_cqm(cqm, label ='Delaunay_general_case')
+
 all_samples=sampleset.samples
 #print(all_samples)
 feasible_sampleset = sampleset.filter(lambda row: row.is_feasible)
@@ -353,4 +355,8 @@ for s in feasible_sampleset:
     #if (quicksum(s[labels[i]] for i in delaunay_trgl)==6):
     print(s)
 
+s=feasible_sampleset.first
+for e in s:
+    print(s[e])
 print(feasible_sampleset.first)
+feasible_sampleset
