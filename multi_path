@@ -1,0 +1,125 @@
+from dimod import ConstrainedQuadraticModel, Binaries, ExactCQMSolver, quicksum, Binary
+from dwave.system import LeapHybridCQMSampler
+import numpy as np
+
+#Shortest multi-path problem
+#nb rows nr
+#nb columns nc
+#nb variables per row nbv_r (we can also imagine that this is a vector)
+#the variables are binaries
+#the total number of variables nbv_r*nj
+#the total number of possibilities is:
+# nbv_r^nr
+# to solve the problem (first version):
+# we use binaries where each binary variable has value 1 if the corresponding pixel is on and 0 if off
+# we minimize the energy E=sum_r(sum_j(sum_k(|wrj-wr+1k|vijvr+1k))), r in [0, nr-2], j in [0, nbv_r-1] for row r, k in [0, nbv_r-1] for row r+1: we can observe the use of || rather than ()^2 
+# for this first version we have  nr constraints as sum_j(vrj)=1 for all r : only one pixel on per row
+
+
+
+
+
+
+def generate_345(nr, nbv_r, w):
+    #fist example nbv_r=3 with values 345
+    for r in range(nr):
+        w[r][0]=3
+        w[r][1]=4
+        w[r][2]=5
+    
+
+
+nr=5
+nc=10
+nbv_r=3
+#create an array of weights
+w=np.zeros(shape=(nr, nbv_r))
+generate_345(nr, nbv_r, w)
+#print(w)
+#create binary variables
+x = np.array([[Binary(f'x_{i}_{j}') for j in range(nbv_r)]
+     for i in range(nr)])
+
+#print(x)
+#create empty cqm
+cqm=ConstrainedQuadraticModel()
+#set the objective function
+cqm.set_objective(sum(abs(w[r,j]-w[r+1,k])*x[r,j]*x[r+1,k] for k in range(nbv_r) for j in range(nbv_r) for r in range(nr-1)))
+#add constraints
+for r in range(nr):
+    cqm.add_constraint(sum(x[r][j] for j in range(nbv_r)) == 1,  label=f'one pixel on in row_{r}')
+
+    
+# solve
+#sampleset = ExactCQMSolver().sample_cqm(cqm)
+cqm_sampler = LeapHybridCQMSampler()
+sampleset=cqm_sampler.sample_cqm(cqm,5, label ='mutli_paths')
+all_samples=sampleset.samples
+print(all_samples)
+feasible_sampleset = sampleset.filter(lambda row: row.is_feasible)
+fsamples_agr=feasible_sampleset.aggregate()
+print('---------------------------------------------FEASIBLE-------------------------------------------------------------')
+for s in feasible_sampleset:
+    print(s)
+
+# s=feasible_sampleset.first
+# print(s)
+# # v=0
+# for j in range(k):
+    # print(j, end=" ")
+    # for i in range(len(weights)):
+        # if (s[0][f'x_{j}_{i}']==1):
+            # print(weights[i], end=" ")
+        # v=v+1
+    # print()
+
+
+# cqm.set_objective(sum(y[j] for j in range(k)))
+# #cqm.set_objective(1000*(sum(y[j] * capacity-sum(weights[i] * x[j][i] for i in range(len(weights))) for j in range(k)))+100*sum(y))
+#cqm.set_objective(20*sum(5-y[j]*sum(x[j][i] for i in range(len(weights))) for j in range(k))+50*sum(y[j] * capacity-sum(weights[i] * x[j][i] for i in range(len(weights))) for j in range(k)))
+# #cqm.set_objective(sum(y[j]*capacity for j in range(k))+(sum((y[j] * capacity**2-2*y[j] * capacity*sum(weights[i] * x[j][i] for i in range(len(weights)))+(sum(weights[i] * x[j][i] for i in range(len(weights))))**2 for j in range(k)))))
+# #cqm.set_objective((sum((y[j] * capacity**2-2*y[j] * capacity*sum(weights[i] * x[j][i] for i in range(len(weights)))+(sum(weights[i] * x[j][i] for i in range(len(weights))))**2 for j in range(k)))))
+
+# #constraints
+
+# #constraint1: each pack must be put at exactly one bin
+# for i in range(len(weights)):
+    # cqm.add_constraint(sum(x[j][i] for j in range(k)) == 1,  label=f'item_placing_{i}')
+
+# #constraint2: weights of packs put in a bin cannot exceed bin's capacity
+# for j in range(k):
+    # cqm.add_constraint(
+        # y[j] * capacity-sum(weights[i] * x[j][i] for i in range(len(weights))) >=0,
+        # label=f'capacity_binM_{j}')
+
+
+# #cqm.add_constraint(sum(y[j] for j in range(k)) <=51, label=f'number_bins_loeq_51')         
+# # for j in range(k):
+    # # cqm.add_constraint(
+        # # y[j] * capacity-sum(weights[i] * x[j][i] for i in range(len(weights))) <=16,
+        # # label=f'capacity_binm_{j}')
+
+# #cqm.add_constraint(sum(y[j] * capacity -sum(weights[i] * x[j][i] for i in range(len(weights))) for j in range(k)) <= 172, label=f'each bin is at its maximum')
+# #variant with additional constraint from me
+# #constraint3: packs with big different weights cannot be in the same bin (crieteria w[i]-w[k]<0.3)
+# #cqm.add_constraint(quicksum(x[i][j]*x[k][j] for j in range(len(weights)) for i in range(len(weights)-1) for k in range(i+1, len(weights)) if (abs(weights[i]-weights[k])>=0.3))==0, label=f'packs with small wieghts diff in the same bin')
+
+# #solve
+# #sampleset = ExactCQMSolver().sample_cqm(cqm)
+# cqm_sampler = LeapHybridCQMSampler()
+# sampleset=cqm_sampler.sample_cqm(cqm,30, label ='Bin_Packing_120')
+# all_samples=sampleset.samples
+# #print(all_samples)
+# feasible_sampleset = sampleset.filter(lambda row: row.is_feasible)
+# fsamples_agr=feasible_sampleset.aggregate()
+# print('---------------------------------------------FEASIBLE-------------------------------------------------------------')
+# s=feasible_sampleset.first
+# print(s)
+# v=0
+# for j in range(k):
+    # print(j, end=" ")
+    # for i in range(len(weights)):
+        # if (s[0][f'x_{j}_{i}']==1):
+            # print(weights[i], end=" ")
+        # v=v+1
+    # print()
